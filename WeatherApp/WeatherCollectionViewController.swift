@@ -8,6 +8,8 @@
 import UIKit
 
 private let reuseIdentifier = "WeatherCondition"
+
+// 用來傳送Cell的IndexPath到WeatherCollectionViewCell的變數
 var indexforCollcell : Int!
 
 
@@ -19,7 +21,7 @@ class WeatherCollectionViewController: UICollectionViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // ????????????????
+        // 設定Collection View的大小
         let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
         flowLayout?.estimatedItemSize = .zero
         flowLayout?.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
@@ -110,6 +112,7 @@ class WeatherCollectionViewController: UICollectionViewController  {
             break
         }
         
+        //傳送Collection View的Cell現在滑到哪一格
         indexforCollcell = indexPath.row
         
         

@@ -5,8 +5,6 @@
 //  Created by tantsunsin on 2020/8/15.
 //
 
-// 方法1: 從程式計算 cell 的大小!!!!! https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E5%95%8F%E9%A1%8C%E8%A7%A3%E7%AD%94%E9%9B%86/%E5%88%A9%E7%94%A8-flow-layout-%E7%9A%84-collection-view-%E8%A3%BD%E4%BD%9C%E7%85%A7%E7%89%87%E7%89%86-e31dad55a7ac
-
 
 import UIKit
 
