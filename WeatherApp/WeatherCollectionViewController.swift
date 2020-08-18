@@ -8,7 +8,7 @@
 import UIKit
 
 private let reuseIdentifier = "WeatherCondition"
-//var indexforCollcell : Int!
+var indexforCollcell : Int!
 
 
 class WeatherCollectionViewController: UICollectionViewController  {
@@ -18,15 +18,17 @@ class WeatherCollectionViewController: UICollectionViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // ????????????????
+        let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
+        flowLayout?.estimatedItemSize = .zero
+        flowLayout?.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
+        flowLayout?.minimumInteritemSpacing = 0
+        flowLayout?.minimumLineSpacing = 0
 
 
         self.clearsSelectionOnViewWillAppear = false
 
-        // Register cell classes
-//        self.collectionView!.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: "WeatherCondition")
-
-        // Do any additional setup after loading the view.
     }
 
     /*
@@ -57,14 +59,14 @@ class WeatherCollectionViewController: UICollectionViewController  {
         
 
              
-        let urlstr = "https://api.openweathermap.org/data/2.5/onecall?\(CityWeather[indexPath.row].GeoCor)&units=metric&lang=zh_tw&exclude=minutely&appid=36e315f09cd337861ef6105d8b41b3ec"
+        let urlstr = "https://api.openweathermap.org/data/2.5/onecall?\(CityWeather[indexPath.row].GeoCor)&units=metric&lang=zh_tw&exclude=minutely&appid=92f6d14773bcb5c84813d403cecaa2a2"
 
         
         if let url = URL(string: urlstr){
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let data = data, let weatherresults = try? JSONDecoder().decode(WeatherObject.self, from: data){
                     DispatchQueue.main.async {
-                        CityWeather[indexPath.row].WeatherOfCity = weatherresults
+                        CityWeather[indexPath.row].WeatherOfCity = weatherresults //下載在一個Array裡面的物件
                         self.collectionView.reloadData()
                     }
                 }
@@ -74,19 +76,20 @@ class WeatherCollectionViewController: UICollectionViewController  {
         
         let Weather = CityWeather[indexPath.row].WeatherOfCity
         
+        // 城市名
         cell.CityNameZHTW.text = CityWeather[indexPath.row].CityNameZHTW
         cell.CityNameEN.text = CityWeather[indexPath.row].CityNameEN
 
-        
-        let tempDegreeC = String(format: "%.1f", (Weather?.current?.temp ?? 0))
-        let FeelsLikeDegreeC = String(format: "%.1f",  (Weather?.current?.feels_like ?? 0))
-        
+        // 天氣內容載入
         cell.WeatherCondLabel.text = String(Weather?.current?.weather[0].description ?? "")
-        cell.CurrentTemp.text = tempDegreeC
-        cell.CurrentFeelsLike.text = FeelsLikeDegreeC
-        cell.CurrentHumiduty.text = String(Weather?.current?.humidity ?? 0)
+        cell.CurrentTemp.text = String(format: "%.1f", (Weather?.current?.temp ?? 0))
+        cell.CurrentFeelsLike.text = String(format: "%.1f",  (Weather?.current?.feels_like ?? 0))
+        cell.CurrentHumidity.text = String(format: "%.f", (Weather?.current?.humidity ?? 0))
+        cell.CurrentHumidity.text?.append("%")
         cell.CurrentWindSpeed.text = String(Weather?.current?.wind_speed ?? 0)
         
+        
+        //設定圖片
         switch Weather?.current?.weather[0].main {
         case "Clouds":
             cell.WeatherImage.image = UIImage(named: "Clouds")
@@ -107,7 +110,7 @@ class WeatherCollectionViewController: UICollectionViewController  {
             break
         }
         
-//        indexforCollcell = indexPath.row
+        indexforCollcell = indexPath.row
         
         
         

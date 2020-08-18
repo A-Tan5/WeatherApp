@@ -28,8 +28,9 @@ struct WeatherObject: Codable{
     var hourly : [hour]
     
     struct hour : Codable {
+        var dt : Int?
         var temp : Double?
-        var humidity :Int?
+        var humidity : Double?
         
         var weather : [hourlyweather]
         
